@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+.grid {
+  width: 80vmin;
+  border: 1px solid;
+  height: 80vmin;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: content-box;
+}
+
+.grid-row {
+  height: 33%;
+}
+.grid-row:nth-child(2),
+.grid-row:nth-child(3) {
+  border-top: 1px solid;
+}
+.grid-col {
+  display: inline-block;
+  height: 100%;
+  width: 33%;
+  text-align: center;
+}
+.grid-col:nth-child(2),
+.grid-col:nth-child(3) {
+  border-left: 1px solid;
+}
+.mole {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
