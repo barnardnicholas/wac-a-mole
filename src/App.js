@@ -1,15 +1,30 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { Component } from "react";
 import "./App.css";
 import Grid from "./components/Grid";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Wac-A-Mole</h1>
-      <Grid />
-    </div>
-  );
+class App extends Component {
+  state = {
+    score: 0,
+    clicks: 0,
+  };
+  render() {
+    return (
+      <div className="App">
+        <h1>Wac-A-Mole - Score: {this.state.score}</h1>
+        <Grid updateScore={this.updateScore} updateClicks={this.updateClicks} />
+        <div>Clicks: {this.state.clicks}</div>
+      </div>
+    );
+  }
+  updateScore = (inc) => {
+    this.setState({
+      score: (this.state.score += inc),
+      clicks: (this.state.clicks += 1),
+    });
+  };
+  updateClicks = (inc) => {
+    this.setState({ clicks: (this.state.clicks += inc) });
+  };
 }
 
 export default App;
