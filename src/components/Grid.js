@@ -9,96 +9,100 @@ class Grid extends Component {
       [false, false, false],
       [false, false, false],
     ],
+    spawnPending: false,
+    gameRunning: true,
   };
   render() {
     const { grid } = this.state;
     return (
-      <div className="grid">
-        <div className="grid-row">
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[0][0] ? true : false}
-              row={0}
-              col={0}
-            />
+      <div className="grid-container">
+        <div className="grid">
+          <div className="grid-row">
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[0][0] ? true : false}
+                row={0}
+                col={0}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[0][1] ? true : false}
+                row={0}
+                col={1}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[0][2] ? true : false}
+                row={0}
+                col={2}
+              />
+            </div>
           </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[0][1] ? true : false}
-              row={0}
-              col={1}
-            />
+          <div className="grid-row">
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[1][0] ? true : false}
+                row={1}
+                col={0}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[1][1] ? true : false}
+                row={1}
+                col={1}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[1][2] ? true : false}
+                row={1}
+                col={2}
+              />
+            </div>
           </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[0][2] ? true : false}
-              row={0}
-              col={2}
-            />
-          </div>
-        </div>
-        <div className="grid-row">
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[1][0] ? true : false}
-              row={1}
-              col={0}
-            />
-          </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[1][1] ? true : false}
-              row={1}
-              col={1}
-            />
-          </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[1][2] ? true : false}
-              row={1}
-              col={2}
-            />
-          </div>
-        </div>
-        <div className="grid-row">
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[2][0] ? true : false}
-              row={2}
-              col={0}
-            />
-          </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[2][1] ? true : false}
-              row={2}
-              col={1}
-            />
-          </div>
-          <div className="grid-col">
-            <Hole
-              handleHit={this.handleHit}
-              handleMiss={this.handleMiss}
-              active={grid[2][2] ? true : false}
-              row={2}
-              col={2}
-            />
+          <div className="grid-row">
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[2][0] ? true : false}
+                row={2}
+                col={0}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[2][1] ? true : false}
+                row={2}
+                col={1}
+              />
+            </div>
+            <div className="grid-col">
+              <Hole
+                handleHit={this.handleHit}
+                handleMiss={this.handleMiss}
+                active={grid[2][2] ? true : false}
+                row={2}
+                col={2}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -124,7 +128,10 @@ class Grid extends Component {
     this.setState((currentState) => {
       let newGrid = [...currentState.grid];
       newGrid[row][col] = true;
-      return newGrid;
+      return {
+        grid: newGrid,
+        spawnPending: false,
+      };
     });
     setTimeout(() => {
       this.setState((currentState) => {
@@ -134,8 +141,20 @@ class Grid extends Component {
     }, Math.random() * 1000 + 250);
   };
 
+  queueSpawn = () => {
+    const repeater = setTimeout(this.spawnHole, Math.random() * 1000 + 200);
+    this.setState({ spawnPending: true });
+  };
+
   componentDidMount() {
-    const repeater = setInterval(this.spawnHole, 1000);
+    if (this.state.gameRunning) {
+      this.queueSpawn();
+    }
+  }
+  componentDidUpdate() {
+    if (!this.state.spawnPending && this.state.gameRunning) {
+      this.queueSpawn();
+    }
   }
 }
 

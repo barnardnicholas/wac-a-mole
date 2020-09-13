@@ -6,7 +6,7 @@ class Hole extends Component {
     const { active } = this.props;
     return (
       <div className="hole" onClick={this.handleClick}>
-        <div>{active ? <Mole /> : ""}</div>
+        <div>{active ? <Mole active={true} /> : <Mole active={false} />}</div>
       </div>
     );
   }
