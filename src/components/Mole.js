@@ -8,7 +8,11 @@ class Mole extends Component {
   };
 
   render() {
-    return <div className={this.props.active ? "mole" : "mole off"}>MOLE</div>;
+    return (
+      <div className={this.props.active ? "mole" : "mole off"}>
+        {this.props.text || "X"}
+      </div>
+    );
   }
 
   componentDidMount() {
