@@ -96,7 +96,7 @@ h1 {
   border-radius: 16px;
   height: 70vmin;
   display: inline-block;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 0;
   box-sizing: content-box;
   -webkit-transform: rotateX(25deg) translateZ(200px);
@@ -148,8 +148,6 @@ h1 {
   flex-direction: column;
   justify-content: center;
   padding: 8px;
-  box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5),
-    inset 7px 7px 5px rgba(0, 0, 0, 0.5);
 }
 .hole-border:nth-child(1) {
   border-radius: 12px;
@@ -174,4 +172,30 @@ h1 {
 .mole.off {
   color: rgba(46, 46, 46, 0.61);
   text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5);
+}
+
+.border-neon-pink {
+  box-shadow: 0 0 10px #ec637b, 0 0 10px rgba(230, 161, 173, 0.1),
+    0 0 20px #f36780 !important;
+  color: #eedde0 !important;
+}
+.border-neon-red {
+  box-shadow: 0 0 10px #ed5959, 0 0 10px rgba(230, 161, 161, 0.1),
+    0 0 20px #f36767 !important;
+  color: #eedddd !important;
+}
+.border-neon-yellow {
+  box-shadow: 0 0 10px #ece163, 0 0 10px rgba(221, 230, 161, 0.1),
+    0 0 20px #e4f367 !important;
+  color: #ebeedd !important;
+}
+.border-neon-green {
+  box-shadow: 0 0 10px #63ec80, 0 0 10px rgba(161, 230, 180, 0.1),
+    0 0 20px #67f367 !important;
+  color: #ddeee5 !important;
+}
+
+.text-neon-pink {
+  text-shadow: 0 0 30px #ec637b, 0 0 10px rgba(230, 161, 173, 0.41),
+    0 0 100px #e6a1ad, 0 0 500px #f36780, 5px 9px 5px rgba(0, 0, 0, 0.5);
 }

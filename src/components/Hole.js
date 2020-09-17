@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Confetti from "react-dom-confetti";
 import HoleBorder from "./HoleBorder";
 import Mole from "./Mole";
+import { executeNTimes } from "../utils/game";
 
 const config = {
   angle: "90",
@@ -18,13 +19,19 @@ const config = {
 };
 
 class Hole extends Component {
+  state = {
+    lightShowInProgress: false,
+    borderToLight: 0,
+    holeBorderColors: [null, null, null],
+  };
   render() {
-    const { active, text } = this.props;
+    const { active, text, row, col } = this.props;
+    const { holeBorderColors } = this.state;
     return (
       <div className="hole" onClick={this.handleClick}>
-        <HoleBorder>
-          <HoleBorder>
-            <HoleBorder>
+        <HoleBorder borderColor={holeBorderColors[0]}>
+          <HoleBorder borderColor={holeBorderColors[1]}>
+            <HoleBorder borderColor={holeBorderColors[2]}>
               <div>
                 {active ? (
                   <Mole active={true} text={text} />
@@ -44,10 +51,48 @@ class Hole extends Component {
     const { active, handleHit, handleMiss, row, col } = this.props;
     if (active) {
       handleHit(row, col);
+      executeNTimes(this.lightShowHit, "green", 3, 100);
       return null;
     } else {
       handleMiss(row, col);
+      executeNTimes(this.lightShowMiss, "yellow", 5, 75);
       return null;
+    }
+  };
+
+  lightShowHit = (color) => {
+    const { holeBorderColors } = this.state;
+    if (!holeBorderColors[0] && !holeBorderColors[1] && !holeBorderColors[2]) {
+      // No borders lit
+      this.setState({ holeBorderColors: [color, null, null] });
+    } else if (
+      holeBorderColors[0] &&
+      !holeBorderColors[1] &&
+      !holeBorderColors[2]
+    ) {
+      // First border lit
+      this.setState({ holeBorderColors: [null, color, null] });
+    } else if (
+      !holeBorderColors[0] &&
+      holeBorderColors[1] &&
+      !holeBorderColors[2]
+    ) {
+      // Second border lit
+      this.setState({ holeBorderColors: [null, null, color] });
+    } else {
+      // Third border lit
+      this.setState({ holeBorderColors: [null, null, null] });
+    }
+  };
+
+  lightShowMiss = (color) => {
+    const { holeBorderColors } = this.state;
+    if (!holeBorderColors[2]) {
+      // No borders lit
+      this.setState({ holeBorderColors: [null, null, color] });
+    } else if (holeBorderColors[2]) {
+      // First border lit
+      this.setState({ holeBorderColors: [null, null, null] });
     }
   };
 }

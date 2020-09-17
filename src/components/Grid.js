@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Hole from "./Hole";
-// import { timer, pickSquare } from "../utils/game.js";
 
 class Grid extends Component {
   state = {
@@ -9,11 +8,16 @@ class Grid extends Component {
       [false, false, false],
       [false, false, false],
     ],
+    holeActions: [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ],
     spawnPending: false,
     gameRunning: true,
   };
   render() {
-    const { grid } = this.state;
+    const { grid, holeActions } = this.state;
     return (
       <div className="grid-container">
         <div className="grid">
@@ -24,6 +28,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[0][0] ? true : false}
+                action={holeActions[0][0]}
                 row={0}
                 col={0}
               />
@@ -34,6 +39,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[0][1] ? true : false}
+                action={holeActions[0][1]}
                 row={0}
                 col={1}
               />
@@ -44,6 +50,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[0][2] ? true : false}
+                action={holeActions[0][2]}
                 row={0}
                 col={2}
               />
@@ -56,6 +63,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[1][0] ? true : false}
+                action={holeActions[1][0]}
                 row={1}
                 col={0}
               />
@@ -66,6 +74,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[1][1] ? true : false}
+                action={holeActions[1][1]}
                 row={1}
                 col={1}
               />
@@ -76,6 +85,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[1][2] ? true : false}
+                action={holeActions[1][2]}
                 row={1}
                 col={2}
               />
@@ -88,6 +98,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[2][0] ? true : false}
+                action={holeActions[2][0]}
                 row={2}
                 col={0}
               />
@@ -98,6 +109,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[2][1] ? true : false}
+                action={holeActions[2][1]}
                 row={2}
                 col={1}
               />
@@ -108,6 +120,7 @@ class Grid extends Component {
                 handleHit={this.handleHit}
                 handleMiss={this.handleMiss}
                 active={grid[2][2] ? true : false}
+                action={holeActions[2][2]}
                 row={2}
                 col={2}
               />
@@ -121,10 +134,13 @@ class Grid extends Component {
   handleHit = (row, col) => {
     this.setState((currentState) => {
       let newGrid = [...currentState.grid];
+      let newHoleActions = [...currentState.holeActions];
       newGrid[row][col] = false;
-      return { grid: newGrid };
+      newHoleActions[row][col] = "hit";
+      return { grid: newGrid, holeActions: newHoleActions };
     });
     this.props.updateScore(1);
+    this.spawnAction(row, col, "hit");
   };
 
   handleMiss = (row, col) => {
@@ -157,6 +173,8 @@ class Grid extends Component {
     let col = Math.floor(Math.random() * 3);
     this.setState((currentState) => {
       let newGrid = [...currentState.grid];
+      let newHoleActions = [...currentState.holeActions];
+      // newHoleActions[row][col] = "hit";
       newGrid[row][col] = true;
       return {
         grid: newGrid,
@@ -166,9 +184,30 @@ class Grid extends Component {
     setTimeout(() => {
       this.setState((currentState) => {
         let newGrid = [...currentState.grid];
+        // let newHoleActions = [...currentState.holeActions];
+        // newHoleActions[row][col] = null;
         newGrid[row][col] = false;
       });
     }, Math.random() * 1000 + 250);
+  };
+
+  spawnAction = (row, col, action) => {
+    this.setState((currentState) => {
+      let newHoleActions = [...currentState.holeActions];
+      newHoleActions[row][col] = action;
+      return {
+        holeActions: newHoleActions,
+      };
+    });
+    setTimeout(() => {
+      this.setState((currentState) => {
+        let newHoleActions = [...currentState.holeActions];
+        newHoleActions[row][col] = null;
+        return {
+          holeActions: newHoleActions,
+        };
+      });
+    }, 300);
   };
 
   queueSpawn = () => {
