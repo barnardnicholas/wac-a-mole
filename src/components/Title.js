@@ -2,8 +2,8 @@ import React from "react";
 
 const Title = () => {
   return (
-    <div style={{ padding: "100px" }}>
-      <h1 style={{ fontSize: "200px" }}>M</h1>
+    <div className="title-board">
+      <h1>Wac-A-Mole</h1>
     </div>
   );
 };

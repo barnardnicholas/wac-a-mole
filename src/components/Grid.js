@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Hole from "./Hole";
-
+import Title from "./Title";
+import ScoreBoard from "./ScoreBoard";
 class Grid extends Component {
   state = {
     grid: [
@@ -20,6 +21,9 @@ class Grid extends Component {
     const { grid, holeActions } = this.state;
     return (
       <div className="grid-container">
+        <div>
+          <Title />
+        </div>
         <div className="grid">
           <div className="grid-row">
             <div className="grid-col">
@@ -126,6 +130,9 @@ class Grid extends Component {
               />
             </div>
           </div>
+        </div>
+        <div>
+          <ScoreBoard score={this.props.score} />
         </div>
       </div>
     );

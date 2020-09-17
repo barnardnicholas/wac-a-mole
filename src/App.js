@@ -11,10 +11,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="h1-container">
-          <h1>Wac-A-Mole - Score: {this.state.score}</h1>
+        <div></div>
+        <div className="perspective-container">
+          <Grid
+            updateScore={this.updateScore}
+            updateClicks={this.updateClicks}
+            score={this.state.score}
+          />
         </div>
-        <Grid updateScore={this.updateScore} updateClicks={this.updateClicks} />
         <div>Clicks: {this.state.clicks}</div>
       </div>
     );
