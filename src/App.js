@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Grid from "./components/Grid";
+import Title from "./components/Title";
 
 class App extends Component {
   state = {

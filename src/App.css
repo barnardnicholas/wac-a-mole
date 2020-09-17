@@ -20,6 +20,9 @@ h1 {
   transform: rotateX(25deg);
 }
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   height: 100vh;
@@ -92,9 +95,9 @@ h1 {
   position: relative;
   top: 30px;
   width: 70vmin;
+  height: 70vmin;
   border: 4px solid rgba(0, 0, 0, 0.5);
   border-radius: 16px;
-  height: 70vmin;
   display: inline-block;
   /* overflow: hidden; */
   padding: 0;
@@ -136,7 +139,7 @@ h1 {
   justify-content: center;
   cursor: pointer;
   width: 100%;
-  padding: 8px;
+  padding: 1%;
   box-sizing: border-box;
 }
 .hole-border {
@@ -147,7 +150,9 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8px;
+  padding: 5%;
+  box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.5),
+    7px 7px 5px rgba(0, 0, 0, 0.5) inset;
 }
 .hole-border:nth-child(1) {
   border-radius: 12px;
@@ -198,4 +203,35 @@ h1 {
 .text-neon-pink {
   text-shadow: 0 0 30px #ec637b, 0 0 10px rgba(230, 161, 173, 0.41),
     0 0 100px #e6a1ad, 0 0 500px #f36780, 5px 9px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Intelligent breakpoints from mobile to very large desktop - CSS Version
+Original article: https://www.freecodecamp.org/news/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862/ */
+
+/* Portrait Phones upwards
+/*-------------------------------------------------- */
+@media (max-width: 599px) {
+  .hole-border {
+    border-width: 3px;
+  }
+}
+
+/* Portrait Tablets upwards
+/*-------------------------------------------------- */
+@media (min-width: 600px) {
+}
+
+/* Landscape Tablets upwards
+/*-------------------------------------------------- */
+@media (min-width: 900px) {
+}
+
+/* Desktop upwards
+/*-------------------------------------------------- */
+@media (min-width: 1200px) {
+}
+
+/* Large Desktop upwards
+/*-------------------------------------------------- */
+@media (min-width: 1800px) {
 }
