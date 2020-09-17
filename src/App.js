@@ -14,7 +14,8 @@ class App extends Component {
         <div className="h1-container">
           <h1>Wac-A-Mole - Score: {this.state.score}</h1>
         </div>
-        <Grid updateScore={this.updateScore} updateClicks={this.updateClicks} />
+        {/* <Grid updateScore={this.updateScore} updateClicks={this.updateClicks} /> */}
+        <Title />
         <div>Clicks: {this.state.clicks}</div>
       </div>
     );
