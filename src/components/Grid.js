@@ -15,14 +15,14 @@ class Grid extends Component {
       [null, null, null],
     ],
     spawnPending: false,
-    gameRunning: true,
+    finishPending: false,
   };
   render() {
     const { grid, holeActions } = this.state;
     return (
       <div className="grid-container">
         <div>
-          <Title />
+          <Title time={this.props.timeRemaining} />
         </div>
         <div className="grid">
           <div className="grid-row">
@@ -154,8 +154,9 @@ class Grid extends Component {
     this.props.updateClicks(1);
   };
 
+  resetGrid = () => {};
+
   handleKeyPress = (e) => {
-    console.log(e.key);
     const keyData = {
       q: [0, 0],
       w: [0, 1],
@@ -223,14 +224,32 @@ class Grid extends Component {
   };
 
   componentDidMount() {
-    if (this.state.gameRunning) {
+    if (this.props.gameStatus === "inProgress") {
       this.queueSpawn();
     }
     document.addEventListener("keydown", this.handleKeyPress, false);
   }
 
-  componentDidUpdate() {
-    if (!this.state.spawnPending && this.state.gameRunning) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.gameStatus === "finished" && this.state.finishPending) {
+      this.setState({
+        grid: [
+          [false, false, false],
+          [false, false, false],
+          [false, false, false],
+        ],
+        holeActions: [
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+        ],
+        spawnPending: false,
+        finishPending: true,
+      });
+    } else if (
+      !this.state.spawnPending &&
+      this.props.gameStatus === "inProgress"
+    ) {
       this.queueSpawn();
     }
   }

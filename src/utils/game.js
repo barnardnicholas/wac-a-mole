@@ -1,5 +1,7 @@
 let canUpdate = true;
 
+export let timer;
+
 // export const timer = () => {
 //   let repeater = setTimeout(pickSquare, 1000);
 // };
